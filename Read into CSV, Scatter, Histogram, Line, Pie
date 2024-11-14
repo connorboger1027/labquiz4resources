@@ -1,0 +1,55 @@
+##Importing Pandas, MPL, and Numpy##
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+
+##Read into CSV File##
+df = pd.read_csv("taylorswift_features_2.csv")
+
+##Using Head Function##
+df.head()
+
+##Creating a Scatterplot (.scatter)##
+plt.scatter(df["loudness"], df["energy"]) #Need to add data to scatterplot
+plt.xlabel('Loudness')
+plt.ylabel('Energy')
+plt.title('Energy vs. Loudness')
+plt.show()
+
+# Plt.Scatter (df['x'],df['y'])
+
+##Adding Color to a Scatterplot##
+colors = ['red' if a == 'Red' else 'blue' for a in df['album_name'] ] #(The album's name is Red, so when it is counting songs from "Red," they will be printed Red.)
+plt.scatter(df["loudness"], df["energy"],color=colors)
+plt.xlabel('Loudness')
+plt.ylabel('Energy')
+plt.show()
+
+##Plotting Multiple Histograms (.hist) Side by Side##
+fig, axs = plt.subplots(nrows=1, ncols=2, figsize=(10,3))  #Must use fig, axs when using the "Subplots" feature
+axs[0].hist(df['duration'])
+axs[0].set_xlabel('Duration (seconds)')
+axs[0].set_ylabel('Frequency')
+axs[0].set_title('Distribution of duration')
+
+axs[1].hist(df['popularity'], color = 'magenta')
+axs[1].set_xlabel('Popularity')
+axs[1].set_ylabel('Frequency')
+axs[1].set_title('Distribution of popularity')
+# You must specify which elements belong to each histogram. axs[0] will always refer to the first one, and axs[1] will always refer to the second.
+# Histograms ONLY have an X axis --> axs[0].hist(df['x])
+
+
+##Using Line Graphs (.plot)##
+plt.plot(df_year.index, df_year['popularity'])
+plt.xlabel('Year')
+plt.ylabel('Average popularity')
+plt.title('Average popularity by year')
+plt.grid(axis='y')
+plt.xticks(ticks = df_year.index, labels = df_year.index, rotation=30)
+plt.show() # Line graphs are a bit tricky in comparison to the others!
+
+##Pie Charts##
+plt.pie(x=df_long['track_name'], labels=df_long.index) # Labels appear on the outside as "Long Song" or "Short Song"
+plt.show()
