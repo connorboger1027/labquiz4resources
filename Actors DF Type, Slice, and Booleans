@@ -1,0 +1,33 @@
+import pandas as pd
+
+##Create Dataframe from Scratch##
+import pandas as pd
+
+actors_dict = {
+'First Name': ['Tom', 'Leonardo', 'Nicole', 'Tom', 'Meryl'],
+'Last Name': ['Cruise', 'DiCaprio', 'Kidman', 'Hanks', 'Streep'],
+'Age': [60, 48, 55, 66, 73],
+'Oscars Nominated': [4, 6, 5, 6, 21],
+'Oscars Won': [0, 1, 1, 2, 3]}
+
+actors_df = pd.DataFrame(actors_dict) 
+
+##Using Type Function to determine if value is a 'str,' 'int', 'float,' or 'numpy.64'##
+type(actors_df['Last Name'][0]) # (Cruise)
+type(actors_df['Oscars Won'][0]) # (0)
+
+##Appending New Columns to Existing Dataframe##
+actors_df['Oscars Ratio'] = actors_df['Oscars Won'] / actors_df['Oscars Nominated']
+actors_df['Years per Nomination'] = actors_df['Age'] / actors_df['Oscars Nominated']
+actors_df
+
+##Slicing Dataframe Columns##
+df_slice = actors_df[['Last Name','Oscars Won']]
+print(df_slice)
+# This returns just the columns "Last Name" and "Oscars Won"
+
+
+##Using Boolean Operators to Condense Slicing##
+df_sub = actors_df[ actors_df['Years per Nomination'] < 10 ]
+print(df_sub)
+# Returns info ONLY about Leonard DiCaprio and Meryl Streep
