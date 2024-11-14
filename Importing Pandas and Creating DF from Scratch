@@ -1,0 +1,28 @@
+##import pandas as pd##
+vals = {"A": [2,4,8], "B": [1,2,4]}
+# sum(vals["A"]/vals["B"])
+# print(sum)
+
+##Convert Pandas to Dataframe##
+df_vals = pd.DataFrame(vals)
+print(sum(df_vals["A"]/df_vals["B"]))
+
+##Creating Actors Dataframe from Scratch##
+actors_dict = {
+'First Name': ['Tom', 'Leonardo', 'Nicole', 'Tom', 'Meryl'],
+'Last Name': ['Cruise', 'DiCaprio', 'Kidman', 'Hanks', 'Streep'],
+'Age': [60, 48, 55, 66, 73],
+'Oscars Nominated': [4, 6, 5, 6, 21],
+'Oscars Won': [0, 1, 1, 2, 3]}
+
+actors_df = pd.DataFrame(actors_dict) 
+
+##Print Dataframe##
+print(actors_df)
+
+##Sort Dataframe ('By Column Name')##
+df_sorted = actors_df.sort_values(by=["Oscars Won", "Last Name"])
+print(df_sorted)
+
+##Aggregate Functions of Dataframe##
+actors_df[['Oscars Nominated', 'Age']].agg(['min', 'max', 'mean', "median"])
