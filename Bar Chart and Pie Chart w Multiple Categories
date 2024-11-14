@@ -1,0 +1,44 @@
+# Create a category to determine the level of popularity of each song
+# 75 <= popularity  : Popular
+# 50 <= popularity < 75 : 'Somewhat Popular'
+# popularity < 50 : 'Not Popular'
+
+pop_categories = ['']*df.shape[0] # This line simply creates an empty list called "pop_categories". The length of this list will be equal to the number of rows in the DF (hence the "shape" functino).
+pop = df['popularity']
+for i in range(df.shape[0]):
+    if pop[i] >= 75:
+        pop_categories[i] = 'Popular'
+    elif pop[i] >= 50:
+        pop_categories[i] = 'Somewhat Popular'
+    else:
+        pop_categories[i] = 'Not Popular'
+
+df['Popular'] = pop_categories
+df_pop = df.groupby('Popular').agg('count')
+df_pop
+
+##Plotting 2 Pie Charts Side by Side##
+fig, axs = plt.subplots(nrows = 1, ncols = 2, figsize = (10,5)) #Remembe to use plt.subplots(nrows = , ncols = )
+
+axs[0].pie(x=df_long['track_name'], labels=df_long.index, autopct="%.2f%%", startangle=90)
+axs[0].set_title('Distribution of songs by length')
+
+axs[1].pie(x=df_pop['track_name'], labels=df_pop.index, autopct="%.2f%%")
+axs[1].set_title('Distribution of songs by popularity')
+
+plt.show()
+
+
+##Bar Chart w Multiple Categories##
+
+df_bar = df.groupby('album_name')[['popularity', 'energy', 'danceability']].mean().sort_values('popularity', ascending = False) # For each Album, we want to know the popularity, energy, and danceability.
+
+x_vals = np.arange(df_bar.shape[0])
+plt.bar(x_vals, height = df_bar['popularity']/100, width = 0.25, label = 'popularity')
+plt.bar(x_vals+0.25, height = df_bar['energy'], width = 0.25, label = 'energy')
+plt.bar(x_vals+0.5, height = df_bar['danceability'], width = 0.25, label = 'danceability')
+plt.ylabel('Average value')
+plt.xticks(ticks = x_vals+0.25, labels = df_bar.index, rotation='vertical')
+plt.title('Average popularity, energy and danceability by album')
+plt.legend()
+plt.show()
